@@ -15,8 +15,8 @@ Short Cut Keys
 - Esc             -       Preview Mode
 - 1-0             -       Pick First Palette Colour    1-10
 - Shift + 1-6     -       Pick First Palette Colour    11-16
-- Clrt + 1-0      -       Pick 2nd Palette Colour      1-10
-- Cltr+Shift+1-6  -       Pick 2nd Palette Colour      11-16
+- Alt + 1-0      -       Pick 2nd Palette Colour      1-10
+- Alt+Shift+1-6  -       Pick 2nd Palette Colour      11-16
 - Layers          -       Alt-1-5 (3 is midground)
 - M               -       Toggle Dither (M)ode - uses colours 1 and 2
 - I               -       Ey(I)e Picker

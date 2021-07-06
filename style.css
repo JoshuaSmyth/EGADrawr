@@ -1,5 +1,5 @@
 html {
-    overflow: scroll;
+    overflow: hidden;
 }
 p { text-align:center; }
 p.border {border-style: solid;}
@@ -41,7 +41,7 @@ div.right
     right:0;
     top: 50%;
     width: 100px; 
-    height:420px;
+    height:480px;
     z-index: 2;
     background:#AAAAAA; 
     text-align: center; 
@@ -94,4 +94,11 @@ div.centre
     z-index: 1;
     background:#AAAAAA; 
     text-align: center; 
+}
+
+div.pal
+{
+    width: 20px; 
+    height: 20px; 
+    border: 1px solid #000000;
 }

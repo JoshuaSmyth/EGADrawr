@@ -3,104 +3,80 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="top">Hello TOP</div>
+        <div id="top" class="top">Hello TOP</div>
             <div class="right">
                 <table style="width: 100%; left:-210px">
                     <tr>
-                        <td style="width: 25%;">1</td>
-                        <td><div id="p0a" style="background-color: #000000; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div id="p0b" style="background-color: #000000; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td style="width: 25%;"></td>
+                        <td><div id="palSelectedA" class="pal" style="background-color: #000000;"></div></td>
+                        <td><div id="palSelectedB" class="pal" style="background-color: #FFFFFF;"></div></td>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td><div id="p1a" style="background-color: #0000AA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div id="p1b" style="background-color: #0000AA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="width: 50%;"><hr></td>
+                        <td style="width: 50%;"><hr></td>
                     </tr>
                     <tr>
-                        <td>3</td>
-                        <td><div id="p2a" style="background-color: #00AAAA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #00AAAA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="width: 25%; text-align: center;">1</td>
+                        <td><div id="p0a" class="pal" style="background-color: #000000;"></div></td>
                     </tr>
                     <tr>
-                        <td>4</td>
-                        <td><div id="p3a" style="background-color: #00AA00; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #00AA00; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">2</td>
+                        <td><div id="p1a" class="pal" style="background-color: #0000AA;"></div></td>
                     </tr>
                     <tr>
-                        <td>5</td>
-                        <td><div id="p4a"  style="background-color: #AA0000; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #AA0000; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">3</td>
+                        <td><div id="p2a" class="pal" style="background-color: #00AAAA;"></div></td>
                     </tr>
                     <tr>
-                        <td>6</td>
-                        <td><div id="p5a"  style="background-color: #AA00AA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #AA00AA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">4</td>
+                        <td><div id="p3a" class="pal" style="background-color: #00AA00;"></div></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">5</td>
+                        <td><div id="p4a" class="pal" style="background-color: #AA0000;"></div></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">6</td>
+                        <td><div id="p5a" class="pal" style="background-color: #AA00AA;"></div></td>
                     </tr>                
                     <tr>
-                        <td>7</td>
-                        <td><div id="p6a"  style="background-color: #AA5500; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #AA5500; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">7</td>
+                        <td><div id="p6a" class="pal" style="background-color: #AA5500;"></div></td>
                     </tr> 
                     <tr>
-                        <td>8</td>
-                        <td><div id="p7a"  style="background-color: #AAAAAA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #AAAAAA; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">8</td>
+                        <td><div id="p7a" class="pal" style="background-color: #AAAAAA;"></div></td>
                     </tr>   
                     <tr>
-                        <td>9</td>
-                        <td><div id="p8a"  style="background-color: #555555; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #555555; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">9</td>
+                        <td><div id="p8a" class="pal" style="background-color: #555555;"></div></td>
                     </tr>
                     <tr>
-                        <td>0</td>
-                        <td><div id="p9a"  style="background-color: #5555FF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #5555FF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">0</td>
+                        <td><div id="p9a" class="pal" style="background-color: #5555FF;"></div></td>
                     </tr>
                     <tr>
-                        <td>s1</td>
-                        <td><div id="p10a"  style="background-color: #55FF55; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #55FF55; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s1</td>
+                        <td><div id="p10a" class="pal" style="background-color: #55FF55;"></div></td>
                     </tr>
                     <tr>
-                        <td>s2</td>
-                        <td><div id="p11a"  style="background-color: #55FFFF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #55FFFF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s2</td>
+                        <td><div id="p11a" class="pal" style="background-color: #55FFFF;"></div></td>
                     </tr>
                     <tr>
-                        <td>s3</td>
-                        <td><div id="p12a"  style="background-color: #FF5555; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #FF5555; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s3</td>
+                        <td><div id="p12a" class="pal"  style="background-color: #FF5555;"></div></td>
                     </tr>
                     <tr>
-                        <td>s4</td>
-                        <td><div id="p13a"  style="background-color: #FF55FF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #FF55FF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s4</td>
+                        <td><div id="p13a" class="pal" style="background-color: #FF55FF;"></div></td>
                     </tr>
                     <tr>
-                        <td>s5</td>
-                        <td><div id="p14a"  style="background-color: #FFFF55; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #FFFF55; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s5</td>
+                        <td><div id="p14a" class="pal" style="background-color: #FFFF55;"></div></td>
                     </tr>
                     <tr>
-                        <td>s6</td>
-                        <td><div id="p15a"  style="background-color: #FFFFFF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td><div style="background-color: #FFFFFF; width: 20px; height: 20px; border: 1px solid #000000;"></div></td>
-                        <td></td>
+                        <td style="text-align: center;">s6</td>
+                        <td><div id="p15a" class="pal" style="background-color: #FFFFFF;"></div></td>
                     </tr>   
                 </table>      
             </div>
@@ -117,6 +93,25 @@
             <div class="centre">
                 <canvas id="myCanvas" width="320px" height="200px"  class="centre"></canvas>
             </div>
+            <a id="link">Download Image</a>
             <script src="app.js"></script>
+            <script>
+
+            // TODO Move to correct location Download the canvas
+            var item = document.getElementById('top');
+            item.addEventListener("mouseup", function (e) {
+            
+                var canvas = document.getElementById('myCanvas');  
+
+                var link = document.getElementById('link');
+                
+                link.setAttribute('download','test.png');
+                link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png',"image/octet-stream"));
+                link.click();
+
+            }
+            , false);
+
+            </script>
     </body>
 </html>
