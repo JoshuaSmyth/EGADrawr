@@ -4,6 +4,8 @@ var IsMouseRightDown = false;
 var selectedColor = '#c0392b';
 var palette = new Array();
 var canvas = document.getElementById("myCanvas");
+var divCanvasBackground = document.getElementById("divCanvasBackground");
+
 canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
 
 function openFullscreen() {
@@ -74,9 +76,9 @@ h = canvas.height;
 
 var img1 = new Image();
 img1.src = 'test.png';
-img1.onload = function () {
-    ctx.drawImage(img1, 0, 0, 320,200);
-};
+// img1.onload = function () {
+//     ctx.drawImage(img1, 0, 0, 320,200);
+// };
 
 var scale = 2;
 
@@ -436,7 +438,6 @@ canvas.addEventListener("mouseover", function (e)
 }, false);
 
 
-// TODO Work out zoom
 var pointX = 0;
 var pointY = 0;
 
@@ -462,5 +463,8 @@ canvas.addEventListener("mousewheel", function (e) {
     {
         scale = 20;
     }
-    canvas.style.transform = "scale(" + scale + ")";
+    var transformString = "scale(" + scale + ")";
+    canvas.style.transform = transformString;
+    divCanvasBackground.style.transform = transformString;
+
 }, false);

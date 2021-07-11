@@ -20,8 +20,22 @@ canvas.centre
 
     border: 1px solid #000000;
     transform-origin: center; 
+    z-index: 1;
 }
-
+div.background
+{
+    position: absolute;
+    left: -80; 
+    right: 0;
+    bottom:0;
+    top:-50;
+    width: 320px;
+    height: 200px;
+    border: 1px solid #000000;
+    background-color: grey;
+    transform-origin: center; 
+    z-index: 0;
+}
 div.top
 {
     left: 0; 
@@ -30,7 +44,7 @@ div.top
     margin-right: auto; 
     height: 50; 
     width: 100; 
-    z-index: 2;
+    z-index: 99;
     position: absolute;
     background:#AAAAAA; 
     text-align: center; 
@@ -44,7 +58,7 @@ div.right
     top: 50%;
     width: 100px; 
     height:480px;
-    z-index: 2;
+    z-index: 99;
     background:#AAAAAA; 
     text-align: center; 
     transform-origin: center; 
@@ -61,7 +75,7 @@ div.bottom
     margin-right: auto; 
     height: 70; 
     width: 500; 
-    z-index: 2;
+    z-index: 99;
     background:#AAAAAA; 
     text-align: center; 
 }
@@ -73,7 +87,7 @@ div.left
     top:50%;
     height: 50; 
     width: 100; 
-    z-index: 2;
+    z-index: 99;
     background:#AAAAAA; 
     text-align: center; 
     transform: translateY(-50%);
