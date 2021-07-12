@@ -110,71 +110,104 @@ function selectIndexB(index)
     palSelectedB.style.backgroundColor  = col;
 }
 
+function setBackgroundIndex(index)
+{
+    var c = palette[index].data;
+    var s = "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")";
+    console.log(s);
+    
+    divCanvasBackground.style.backgroundColor =s;
+
+}
+
 {
     var item0 = document.getElementById("p0a"); 
     item0.onclick = function(e) { selectIndexA(0); }
     item0.oncontextmenu = function() { selectIndexB(0); return false; }
+    item0.ondblclick = function() { setBackgroundIndex(0); }
 
     var item1 = document.getElementById("p1a"); 
     item1.onclick = function() { selectIndexA(1); }
     item1.oncontextmenu= function() { selectIndexB(1); return false; }
+    item1.ondblclick = function() { setBackgroundIndex(1); }
 
     var item2 = document.getElementById("p2a"); 
     item2.onclick = function() { selectIndexA(2); }
     item2.oncontextmenu= function() { selectIndexB(2); return false; }
+    item2.ondblclick = function() { setBackgroundIndex(2); }
 
     var item3 = document.getElementById("p3a"); 
     item3.onclick = function() { selectIndexA(3); }
     item3.oncontextmenu= function() { selectIndexB(3); return false; }
+    item3.ondblclick = function() { setBackgroundIndex(3); }
 
     var item4 = document.getElementById("p4a"); 
     item4.onclick = function() { selectIndexA(4); }
     item4.oncontextmenu= function() { selectIndexB(4); return false; }
+    item4.ondblclick = function() { setBackgroundIndex(4); }
 
     var item5 = document.getElementById("p5a"); 
     item5.onclick = function() { selectIndexA(5); }
     item5.oncontextmenu= function() { selectIndexB(5); return false; }
+    item5.ondblclick = function() { setBackgroundIndex(5); }
 
     var item6 = document.getElementById("p6a"); 
     item6.onclick = function() { selectIndexA(6); }
     item6.oncontextmenu= function() { selectIndexB(6); return false; }
+    item6.ondblclick = function() { setBackgroundIndex(6); }
 
     var item7 = document.getElementById("p7a"); 
     item7.onclick = function() { selectIndexA(7); }
     item7.oncontextmenu= function() { selectIndexB(7); return false; }
+    item7.ondblclick = function() { setBackgroundIndex(7); }
 
     var item8 = document.getElementById("p8a"); 
     item8.onclick = function() { selectIndexA(8); }
     item8.oncontextmenu= function() { selectIndexB(8); return false; }
+    item8.ondblclick = function() { setBackgroundIndex(8); }
 
     var item9 = document.getElementById("p9a"); 
     item9.onclick = function() { selectIndexA(9); }
     item9.oncontextmenu= function() { selectIndexB(9); return false; }
-    
+    item9.ondblclick = function() { setBackgroundIndex(9); }
+
     var item10 = document.getElementById("p10a"); 
     item10.onclick = function() { selectIndexA(10); }
     item10.oncontextmenu= function() { selectIndexB(10); return false; }
+    item10.ondblclick = function() { setBackgroundIndex(10); }
 
     var item11 = document.getElementById("p11a"); 
     item11.onclick = function() { selectIndexA(11); }
     item11.oncontextmenu= function() { selectIndexB(11); return false; }
+    item11.ondblclick = function() { setBackgroundIndex(11); }
 
     var item12 = document.getElementById("p12a"); 
     item12.onclick = function() { selectIndexA(12); }
     item12.oncontextmenu= function() { selectIndexB(12); return false; }
+    item12.ondblclick = function() { setBackgroundIndex(12); }
 
     var item13 = document.getElementById("p13a"); 
     item13.onclick = function() { selectIndexA(13); }
     item13.oncontextmenu= function() { selectIndexB(13); return false; }
-    
+    item13.ondblclick = function() { setBackgroundIndex(13); }
+
     var item14 = document.getElementById("p14a"); 
     item14.onclick = function() { selectIndexA(14); }
     item14.oncontextmenu= function() { selectIndexB(14); return false; }
+    item14.ondblclick = function() { setBackgroundIndex(14); }
 
     var item15 = document.getElementById("p15a"); 
     item15.onclick = function() { selectIndexA(15); }
     item15.oncontextmenu= function() { selectIndexB(15); return false; }
+    item15.ondblclick = function() { setBackgroundIndex(15); }
+
+    var item16 = document.getElementById("p16a"); 
+    item16.onclick = function() { selectIndexA(16); }
+    item16.oncontextmenu= function() { selectIndexB(16); return false; }
+    item16.ondblclick = function() { setBackgroundIndex(16); }
 }
+
+
 
 function CreateColor(r, g, b)
 {
@@ -184,6 +217,18 @@ function CreateColor(r, g, b)
     c1d[1] = g;
     c1d[2] = b;
     c1d[3] = 255;
+
+    return c1;
+}
+
+function CreateColorRGBA(r, g, b, a)
+{
+    var c1 = ctx.createImageData(1,1);
+    var c1d  = c1.data;
+    c1d[0] = r;
+    c1d[1] = g;
+    c1d[2] = b;
+    c1d[3] = a;
 
     return c1;
 }
@@ -204,6 +249,7 @@ palette[12] = CreateColor(255, 85, 85);
 palette[13] = CreateColor(255, 85, 255);
 palette[14] = CreateColor(255, 255, 85);
 palette[15] = CreateColor(255, 255, 255);
+palette[16] = CreateColorRGBA(128, 128, 128, 0);
 
 // Brushes are 7x7
 const brush1 = [
@@ -336,23 +382,34 @@ function drawPixel(e)
                         {
                             if (xcoord%2==1)
                             {
-                                ctx.putImageData(colora, xcoord, ycoord);  
+                                if (colora.data[3] > 0)
+                                {
+                                    ctx.putImageData(colora, xcoord, ycoord);
+                                }  
                             }
                             else
                             {
-                                ctx.putImageData(colorb, xcoord, ycoord);  
+                                if (colorb[3] > 0)
+                                {
+                                    ctx.putImageData(colorb, xcoord, ycoord);  
+                                }
                             }
                         }
                         else
                         {
-                            
                             if (xcoord%2==0)
                             {
-                                ctx.putImageData(colora, xcoord, ycoord);  
+                                if (colora.data[3] > 0)
+                                {
+                                    ctx.putImageData(colora, xcoord, ycoord);
+                                }  
                             }
                             else
                             {
-                                ctx.putImageData(colorb, xcoord, ycoord);  
+                                if (colorb.data[3] > 0)
+                                {
+                                    ctx.putImageData(colorb, xcoord, ycoord);
+                                }  
                             }
                         }
                     }
@@ -363,16 +420,19 @@ function drawPixel(e)
         }
         else
         {
-            var i=0;
-            for(var a=0;a<7;a++)
+            if (color.data[3] > 0)
             {
-                for(var b=0;b<7;b++)
+                var i=0;
+                for(var a=0;a<7;a++)
                 {
-                    if (currentBrush[i] == 1)
+                    for(var b=0;b<7;b++)
                     {
-                        ctx.putImageData(color, x+a-4, y+b-4);  
+                        if (currentBrush[i] == 1)
+                        {
+                            ctx.putImageData(color, x+a-4, y+b-4);  
+                        }
+                        i++;
                     }
-                    i++;
                 }
             }
         }
