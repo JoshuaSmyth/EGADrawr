@@ -389,7 +389,7 @@ function drawPixel(e)
                             }
                             else
                             {
-                                if (colorb[3] > 0)
+                                if (colorb.data[3] > 0)
                                 {
                                     ctx.putImageData(colorb, xcoord, ycoord);  
                                 }
