@@ -76,11 +76,10 @@ h = canvas.height;
 
 var img1 = new Image();
 img1.src = 'test.png';
-// img1.onload = function () {
-//     ctx.drawImage(img1, 0, 0, 320,200);
-// };
-
 var scale = 2;
+
+var lastClientX = -1;
+var lastClientY = -1;
 
 // Hook up the palette clicks
 var selectedPalIndexA = 0;
@@ -117,7 +116,6 @@ function setBackgroundIndex(index)
     console.log(s);
     
     divCanvasBackground.style.backgroundColor =s;
-
 }
 
 {
@@ -206,8 +204,6 @@ function setBackgroundIndex(index)
     item16.oncontextmenu= function() { selectIndexB(16); return false; }
     item16.ondblclick = function() { setBackgroundIndex(16); }
 }
-
-
 
 function CreateColor(r, g, b)
 {
@@ -298,7 +294,6 @@ const brush5 = [
             0,1,1,1,1,1,0,
             0,0,1,1,1,0,0]
 
-
 var brushes = [brush1, brush2, brush3, brush4, brush5]
 
 var dithermode = false; // 1 or two
@@ -328,7 +323,20 @@ function decBrushIndex()
 }
 
 
-function drawPixel(e)
+function clamp(value, min, max)
+{
+    if (value < min)
+    {
+        value = min;
+    }
+    if (value > max)
+    {
+        value = max;
+    }
+    return value;
+}
+
+function drawPixel(clientX, clientY)
 {
     var color = palette[selectedPalIndexA];
  
@@ -349,8 +357,8 @@ function drawPixel(e)
         var scaleX = rect.width / canvas.offsetWidth;
         var scaleY = rect.height / canvas.offsetHeight;
 
-        var x = (e.clientX - rect.left) / scaleX;
-        var y = (e.clientY - rect.top) / scaleY;
+        var x = (clientX - rect.left) / scaleX;
+        var y = (clientY - rect.top) / scaleY;
 
         x-=1;
         y-=1;
@@ -378,9 +386,9 @@ function drawPixel(e)
                         var ycoord = Math.round(y+b-4);
                         var xcoord = Math.round(x+a-4);
 
-                        if (ycoord%2 == 0)
+                        if (ycoord % 2 == 0)
                         {
-                            if (xcoord%2==1)
+                            if (xcoord % 2==1)
                             {
                                 if (colora.data[3] > 0)
                                 {
@@ -397,7 +405,7 @@ function drawPixel(e)
                         }
                         else
                         {
-                            if (xcoord%2==0)
+                            if (xcoord % 2==0)
                             {
                                 if (colora.data[3] > 0)
                                 {
@@ -423,9 +431,9 @@ function drawPixel(e)
             if (color.data[3] > 0)
             {
                 var i=0;
-                for(var a=0;a<7;a++)
+                for(var a=0; a<7; a++)
                 {
-                    for(var b=0;b<7;b++)
+                    for(var b=0; b<7; b++)
                     {
                         if (currentBrush[i] == 1)
                         {
@@ -443,7 +451,38 @@ canvas.addEventListener("mousemove", function (e) {
 
     if (IsMouseLeftDown || IsMouseRightDown)
     {
-        drawPixel(e);
+        // Draw between lastclientx and clientx
+        if (lastClientX > -1 && lastClientY > -1)
+        {
+            var dx = lastClientX - e.clientX;
+            var dy = lastClientY - e.clientY;
+        
+            dx = clamp(dx, -8, 8);
+            dy = clamp(dy, -8, 8);
+
+            // TODO Calc Vector and displacement            
+            // Fixme!
+
+            // TODo Implement Line drawing first
+
+            /*
+            for(var x=0;x<dx;x++)
+            {
+                for(var y=0;y<dy;y++)
+                {
+                    drawPixel(e.clientX+x, e.clientY+y);
+                }
+            }
+            */
+
+        }
+        //else
+        {
+            drawPixel(e.clientX, e.clientY);
+        }
+
+        lastClientX = e.clientX;
+        lastClientY = e.clientY;
     }
 
 }, false);
@@ -460,7 +499,10 @@ canvas.addEventListener("mousedown", function (e)
     }
     if (e.button == 0 || e.button == 2)
     {
-        drawPixel(e);
+        drawPixel(e.clientX, e.clientY);
+
+        lastClientX = e.clientX;
+        lastClientY = e.clientY;   
     }
 }, false);
 
@@ -497,9 +539,6 @@ canvas.addEventListener("mouseover", function (e)
     IsMouseRightDown = WasMouseRightDown;
 }, false);
 
-
-var pointX = 0;
-var pointY = 0;
 
 canvas.addEventListener("mousewheel", function (e) {
     e.preventDefault();
