@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <div id="top" class="top">Hello EGA DrawR</div>
+            <div class="right">
+                <include src="partial_palette.html"></include> 
+            </div>
+            <div class="left" onmousedown="openFullscreen();">Hello Left</div>
+            <div class="bottom">
+                <div style="margin:10px">
+                    <canvas id="myCanvas1" width="80" height="50" style="border:1px solid #000000;"></canvas>
+                    <canvas id="myCanvas2" width="80" height="50" style="border:1px solid #000000;"></canvas>
+                    <canvas id="myCanvas3" width="80" height="50" style="border:1px solid #000000;"></canvas>
+                    <canvas id="myCanvas4" width="80" height="50" style="border:1px solid #000000;"></canvas>
+                    <canvas id="myCanvas5" width="80" height="50" style="border:1px solid #000000;"></canvas>
+                </div>
+            </div>
+            <div class="centre">
+                <div id="divCentreContainer">
+                    <div id="divCanvasBackground" class="background"></div>
+                    <canvas id="myCanvas" width="320px" height="200px"  class="centre"></canvas>
+                </div>
+            </div>
+
+            <a id="link">Download Image</a>
+            <script src="app.js"></script>
+            <script>
+
+            // TODO Move to correct location Download the canvas
+            var item = document.getElementById('top');
+            item.addEventListener("mouseup", function (e) {
+            
+                var canvas = document.getElementById('myCanvas');  
+
+                var link = document.getElementById('link');
+                
+                link.setAttribute('download','test.png');
+                link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png',"image/octet-stream"));
+                link.click();
+
+            }
+            , false);
+
+            </script>
+    </body>
+</html>
