@@ -3,40 +3,23 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <div id="top" class="top">Hello EGA DrawR</div>
-            <div class="right">
-                <include src="partial_palette.html"></include> 
-            </div>
-            <div class="left" onmousedown="openFullscreen();">Hello Left</div>
-            <div class="bottom">
-                <include src="partial_layers.html"></include>
-            </div>
-            <div class="centre">
-                <div id="divCentreContainer">
-                    <div id="divCanvasBackground" class="background"></div>
-                    <canvas id="myCanvas" width="320px" height="200px"  class="centre"></canvas>
-                </div>
-            </div>
+        <div id="top" class="top">
+            <include src="partial_header.html"></include>
+        </div>
+        <div class="right">
+            <include src="partial_palette.html"></include> 
+        </div>
+        <div class="left">
+            <include src="partial_tools.html"></include>
+        </div>
+        <div class="bottom">
+            <include src="partial_layers.html"></include>
+        </div>
+        <div class="centre">
+            <include src="partial_canvas.html"></include>
+        </div>
 
-            <a id="link">Download Image</a>
-            <script src="app.js"></script>
-            <script>
-
-            // TODO Move to correct location Download the canvas
-            var item = document.getElementById('top');
-            item.addEventListener("mouseup", function (e) {
-            
-                var canvas = document.getElementById('myCanvas');  
-
-                var link = document.getElementById('link');
-                
-                link.setAttribute('download','test.png');
-                link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png',"image/octet-stream"));
-                link.click();
-
-            }
-            , false);
-
-            </script>
+        <!-- Javascript -->
+        <script src="app.js"></script>
     </body>
 </html>

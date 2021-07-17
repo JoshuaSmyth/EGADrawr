@@ -42,8 +42,8 @@ div.top
     right: 0; 
     margin-left: auto; 
     margin-right: auto; 
-    height: 50; 
-    width: 100; 
+    height: 70; 
+    width: 240; 
     z-index: 99;
     position: absolute;
     background:#AAAAAA; 
@@ -85,7 +85,7 @@ div.left
     position: absolute;
     left:0;
     top:50%;
-    height: 50; 
+    height: 140; 
     width: 100; 
     z-index: 99;
     background:#AAAAAA; 

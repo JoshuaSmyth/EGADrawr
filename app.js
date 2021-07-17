@@ -1,4 +1,3 @@
-
 var IsMouseLeftDown = false;
 var IsMouseRightDown = false;
 var selectedColor = '#c0392b';
@@ -14,6 +13,17 @@ btnDitherMode.onclick = function()
 }
 
 canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
+
+
+function downloadImage() {
+
+    var canvas = document.getElementById('myCanvas');  
+    var link = document.getElementById('link');
+    
+    link.setAttribute('download','test.png');
+    link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png',"image/octet-stream"));
+    link.click();
+}
 
 function openFullscreen() {
 

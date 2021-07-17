@@ -3,7 +3,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="top" class="top">Hello EGA DrawR</div>
+    <div id="top" class="top">
+      <div>
+        <div>EGA DrawR</div>
+        <hr />
+        <button onmousedown="openFullscreen();" style="width: fit-content;">Fullscreen</button>
+        <button onmousedown="downloadImage();" style="width: fit-content;">Download</button>
+        <a id="link"></a>
+      </div>
+    </div>
     <div class="right">
       <table style="width: 100%; left:-210px">
         <tr>
@@ -150,7 +158,11 @@
         </tr>
       </table>
     </div>
-    <div class="left" onmousedown="openFullscreen();">Hello Left</div>
+    <div class="left">
+      <div>
+    Tools
+    <hr /><table><tr><td><input type="radio" id="toolEraser" name="toolselect" disabled="true" /></td><td>Eraser</td></tr><tr><td><input type="radio" id="toolBrush" name="toolselect" checked="true" /></td><td>Brush</td></tr><tr><td><input type="radio" id="line" name="toolselect" disabled="true" /></td><td>line</td></tr><tr><td><input type="radio" id="Picker" name="toolselect" disabled="true" /></td><td>Picker</td></tr></table></div>
+    </div>
     <div class="bottom">
       <div style="margin:10px">
         <canvas id="myCanvas1" width="80" height="50" style="border:1px solid #000000;"></canvas>
@@ -166,25 +178,7 @@
         <canvas id="myCanvas" width="320px" height="200px" class="centre"></canvas>
       </div>
     </div>
-    <a id="link">Download Image</a>
+    <!-- Javascript -->
     <script src="app.js"></script>
-    <script>
-
-            // TODO Move to correct location Download the canvas
-            var item = document.getElementById('top');
-            item.addEventListener("mouseup", function (e) {
-            
-                var canvas = document.getElementById('myCanvas');  
-
-                var link = document.getElementById('link');
-                
-                link.setAttribute('download','test.png');
-                link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png',"image/octet-stream"));
-                link.click();
-
-            }
-            , false);
-
-            </script>
   </body>
 </html>
