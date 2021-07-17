@@ -57,7 +57,7 @@ div.right
     right:0;
     top: 50%;
     width: 100px; 
-    height:520px;
+    height:600px;
     z-index: 99;
     background:#AAAAAA; 
     text-align: center; 
@@ -117,4 +117,5 @@ div.pal
     width: 20px; 
     height: 20px; 
     border: 1px solid #000000;
+    margin-left: 12;
 }

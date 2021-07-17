@@ -6,6 +6,13 @@ var palette = new Array();
 var canvas = document.getElementById("myCanvas");
 var divCanvasBackground = document.getElementById("divCanvasBackground");
 
+var btnDitherMode = document.getElementById("btnDitherMode");
+btnDitherMode.onclick = function() 
+{ 
+    ToggleDitherMode();
+    dithermode ? btnDitherMode.innerHTML = "On" : btnDitherMode.innerHTML = "Off";
+}
+
 canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
 
 function openFullscreen() {
