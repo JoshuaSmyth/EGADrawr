@@ -2,8 +2,19 @@ var IsMouseLeftDown = false;
 var IsMouseRightDown = false;
 var selectedColor = '#c0392b';
 var palette = new Array();
+
+
 var canvas = document.getElementById("myCanvas");
 var divCanvasBackground = document.getElementById("divCanvasBackground");
+canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
+var ctx = canvas.getContext("2d");
+var canvasData = ctx.createImageData(320, 200);
+var backBuffer = new Uint32Array(canvasData.data.buffer);
+
+w = canvas.width;
+h = canvas.height;
+
+
 
 var btnDitherMode = document.getElementById("btnDitherMode");
 btnDitherMode.onclick = function() 
@@ -12,7 +23,6 @@ btnDitherMode.onclick = function()
     dithermode ? btnDitherMode.innerHTML = "On" : btnDitherMode.innerHTML = "Off";
 }
 
-canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
 
 
 function downloadImage() {
@@ -87,12 +97,7 @@ function globalKeys(e)
 
 document.addEventListener('keyup', globalKeys);
 
-var ctx = canvas.getContext("2d");
-w = canvas.width;
-h = canvas.height;
 
-var img1 = new Image();
-img1.src = 'test.png';
 var scale = 2;
 
 var lastClientX = -1;
@@ -353,147 +358,189 @@ function clamp(value, min, max)
     return value;
 }
 
-function drawPixel(clientX, clientY)
+function drawLine(startClientX, startClientY, endClientX, endClientY)
 {
-    var color = palette[selectedPalIndexA];
- 
-    if (IsMouseRightDown)
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = rect.width / canvas.offsetWidth;
+    var scaleY = rect.height / canvas.offsetHeight;
+
+    var x0 = Math.floor((startClientX - rect.left) / scaleX);
+    var y0 = Math.floor((startClientY - rect.top) / scaleY);
+
+    var x1 = Math.floor((endClientX - rect.left) / scaleX);
+    var y1 = Math.floor((endClientY - rect.top) / scaleY);
+
+    // Bresenham's Line Drawing Algorithm - Wikipedia
+    var dx = Math.abs(x1 - x0);
+    var dy = Math.abs(y1 - y0);
+    var sx = (x0 < x1) ? 1 : -1;
+    var sy = (y0 < y1) ? 1 : -1;
+    var err = dx - dy;
+
+    // Bounds
+    var left = x0;
+    if (x1 < left)
     {
-        color = palette[selectedPalIndexB]
+        left = x1;
     }
 
-    if (document.fullscreenElement)
+    var top = y0;
+    if (y1 < top)
     {
-        // No draw when fullscreen
-        IsMouseLeftDown = false; 
-        IsMouseRightDown = false;
+        top = y1;
+    }
+
+    var currentBrush = brushes[currentbrushIndex];
+    var colora = palette[selectedPalIndexA];
+    var colorb = palette[selectedPalIndexB]
+
+    if (IsMouseRightDown)
+    {
+        colora = palette[selectedPalIndexB]
+    }
+
+    var pixelColorA = colora.data[0] | colora.data[1] << 8 | colora.data[2] << 16 | colora.data[3] << 24
+    var pixelColorB = colorb.data[0] | colorb.data[1] << 8 | colorb.data[2] << 16 | colorb.data[3] << 24
+
+    // TODO Dithermode
+    if (!dithermode)
+    {
+        while(!((x0 == x1) && (y0 == y1))) 
+        {
+            var e2 = 2 * err;
+
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+
+            // Plot
+            {
+                // Plot brush
+                if (colora.data[3] > 0)
+                {
+                    var i=0;
+                    for(var a=0; a<7; a++)
+                    {
+                        for(var b=0; b<7; b++)
+                        {
+                            if (currentBrush[i] == 1)
+                            {
+                                var p = (y0+b-4)*320+(x0+a-4);
+                                backBuffer[p] = pixelColorA; //0xFF000000;
+                            }
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
     }
     else
     {
-        var rect = canvas.getBoundingClientRect();
-        var scaleX = rect.width / canvas.offsetWidth;
-        var scaleY = rect.height / canvas.offsetHeight;
-
-        var x = (clientX - rect.left) / scaleX;
-        var y = (clientY - rect.top) / scaleY;
-
-        x-=1;
-        y-=1;
-        if (x<0) {
-            x = 0;
-        }
-        if (y<0) {
-            y = 0;
-        }
-
-        var currentBrush = brushes[currentbrushIndex];
-
-        if (dithermode)
+        while(!((x0 == x1) && (y0 == y1))) 
         {
-            colora = palette[selectedPalIndexA]
-            colorb = palette[selectedPalIndexB]
-            
-            var i=0;
-            for(var a=0;a<7;a++)
-            {
-                for(var b=0;b<7;b++)
-                {
-                    if (currentBrush[i] == 1)
-                    {
-                        var ycoord = Math.round(y+b-4);
-                        var xcoord = Math.round(x+a-4);
+            var e2 = 2 * err;
 
-                        if (ycoord % 2 == 0)
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+
+            // Plot
+            {
+                // Plot brush
+                //if (color.data[3] > 0)
+                {
+                    var i=0;
+                    for(var a=0; a<7; a++)
+                    {
+                        for(var b=0; b<7; b++)
                         {
-                            if (xcoord % 2==1)
+                            if (currentBrush[i] == 1)
                             {
-                                if (colora.data[3] > 0)
+                                var ycoord = Math.round(y0+b-4);
+                                var xcoord = Math.round(x0+a-4);
+                                var p = (y0+b-4)*320+(x0+a-4);
+
+                                if (ycoord % 2 == 0)
                                 {
-                                    ctx.putImageData(colora, xcoord, ycoord);
-                                }  
-                            }
-                            else
-                            {
-                                if (colorb.data[3] > 0)
+                                    if (xcoord % 2==1)
+                                    {
+                                        if (colora.data[3] > 0)
+                                        {
+                                            backBuffer[p] = pixelColorA;
+                                        }  
+                                    }
+                                    else
+                                    {
+                                        if (colorb.data[3] > 0)
+                                        {
+                                          backBuffer[p] = pixelColorB; //0xFF000000;
+                                        }
+                                    }
+                                }
+                                else
                                 {
-                                    ctx.putImageData(colorb, xcoord, ycoord);  
+                                    if (xcoord % 2==0)
+                                    {
+                                        if (colora.data[3] > 0)
+                                        {
+                                            backBuffer[p] = pixelColorA;
+                                        }  
+                                    }
+                                    else
+                                    {
+                                        if (colorb.data[3] > 0)
+                                        {                            
+                                          backBuffer[p] = pixelColorB; //0xFF000000;
+                                        }  
+                                    }
                                 }
                             }
+                            i++;
                         }
-                        else
-                        {
-                            if (xcoord % 2==0)
-                            {
-                                if (colora.data[3] > 0)
-                                {
-                                    ctx.putImageData(colora, xcoord, ycoord);
-                                }  
-                            }
-                            else
-                            {
-                                if (colorb.data[3] > 0)
-                                {
-                                    ctx.putImageData(colorb, xcoord, ycoord);
-                                }  
-                            }
-                        }
-                    }
-
-                    i++;
-                }
-            }
-        }
-        else
-        {
-            if (color.data[3] > 0)
-            {
-                var i=0;
-                for(var a=0; a<7; a++)
-                {
-                    for(var b=0; b<7; b++)
-                    {
-                        if (currentBrush[i] == 1)
-                        {
-                            ctx.putImageData(color, x+a-4, y+b-4);  
-                        }
-                        i++;
                     }
                 }
             }
         }
     }
+
+    ctx.putImageData(canvasData, 0, 0, left-4, top-4, dx+1+8, dy+1+8);  // Probably wait till end to get the correct bounds?
+}
+
+function drawPixel(clientX, clientY)
+{
+    // TODO Bring draw pixel back
+    
+    return;
 }
 
 canvas.addEventListener("mousemove", function (e) {
 
     if (IsMouseLeftDown || IsMouseRightDown)
     {
+        console.log("mouise");
         // Draw between lastclientx and clientx
         if (lastClientX > -1 && lastClientY > -1)
         {
             var dx = lastClientX - e.clientX;
             var dy = lastClientY - e.clientY;
         
-            dx = clamp(dx, -8, 8);
-            dy = clamp(dy, -8, 8);
-
-            // TODO Calc Vector and displacement            
-            // Fixme!
-
-            // TODo Implement Line drawing first
-
-            /*
-            for(var x=0;x<dx;x++)
-            {
-                for(var y=0;y<dy;y++)
-                {
-                    drawPixel(e.clientX+x, e.clientY+y);
-                }
-            }
-            */
-
+            // TODO limit distance
+            drawLine(e.clientX, e.clientY, lastClientX, lastClientY);
         }
-        //else
+        else
         {
             drawPixel(e.clientX, e.clientY);
         }
@@ -547,8 +594,18 @@ canvas.addEventListener("mouseout", function (e)
 
     IsMouseLeftDown = false; 
     IsMouseRightDown = false;
+    
 }, false);
 
+canvas.addEventListener("mouseenter", function (e) 
+{ 
+    
+    IsMouseLeftDown = false; 
+    IsMouseRightDown = false;
+
+    lastClientX = e.clientX;
+    lastClientY = e.clientY;
+}, false);
 
 canvas.addEventListener("mouseover", function (e) 
 { 
