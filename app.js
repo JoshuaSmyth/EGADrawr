@@ -3,7 +3,6 @@ var IsMouseRightDown = false;
 var selectedColor = '#c0392b';
 var palette = new Array();
 
-
 var canvas = document.getElementById("myCanvas");
 var divCanvasBackground = document.getElementById("divCanvasBackground");
 canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); }
@@ -14,16 +13,13 @@ var backBuffer = new Uint32Array(canvasData.data.buffer);
 w = canvas.width;
 h = canvas.height;
 
-
+var txtToolSize = document.getElementById("txtToolSize");
 
 var btnDitherMode = document.getElementById("btnDitherMode");
 btnDitherMode.onclick = function() 
 { 
     ToggleDitherMode();
-    dithermode ? btnDitherMode.innerHTML = "On" : btnDitherMode.innerHTML = "Off";
 }
-
-
 
 function downloadImage() {
 
@@ -35,8 +31,8 @@ function downloadImage() {
     link.click();
 }
 
-function openFullscreen() {
-
+function openFullscreen() 
+{
     console.log("AttemptFullscreen");
     var elem = document.getElementById('myCanvas');
 
@@ -49,9 +45,8 @@ function openFullscreen() {
     }
 }
 
-function globalKeys(e)
+function globalKeys(e) 
 {
-
     if (e.shiftKey)
     {
         console.log("Shift was pressed");
@@ -92,6 +87,70 @@ function globalKeys(e)
         ToggleDitherMode();
     }
 
+    if (e.altKey)
+    {
+        if (e.shiftKey)
+        {
+            if (e.keyCode >= 49 && e.keyCode <= 55)
+            {
+                selectIndexB(e.keyCode-39);
+            }
+        }
+        else
+        {
+            if (e.keyCode == 48)
+            {
+                selectIndexB(9);
+            }
+            if (e.keyCode >= 49 && e.keyCode <= 57)
+            {
+                selectIndexB(e.keyCode-49);
+            }
+        }
+    }
+    else
+    {
+        if (e.shiftKey)
+        {
+            if (e.keyCode >= 49 && e.keyCode <= 55)
+            {
+                selectIndexA(e.keyCode-39);
+            }
+        }
+        else
+        {
+            if (e.keyCode == 48)
+            {
+                selectIndexA(9);
+            }
+            if (e.keyCode >= 49 && e.keyCode <= 57)
+            {
+                selectIndexA(e.keyCode-49);
+            }
+        }
+    }
+
+    if (e.keyCode == 186)
+    {
+        decSelectedIndexA();
+    }
+
+    if (e.keyCode == 222)
+    {
+        incSelectedIndexA();
+    }
+
+    if (e.keyCode == 190)
+    {
+        decSelectedIndexB();
+    }
+
+    if (e.keyCode == 191)
+    {
+        incSelectedIndexB();
+    }
+
+
    console.log("KeyUp:" + e.keyCode);
 }
 
@@ -109,6 +168,41 @@ var selectedPalIndexB = 15;
 
 var palSelectedA = document.getElementById("palSelectedA");
 var palSelectedB = document.getElementById("palSelectedB"); 
+
+function incSelectedIndexB()
+{
+    var index = (selectedPalIndexB + 1) % 17;
+    selectIndexB(index);
+}
+
+function decSelectedIndexB()
+{
+    var index = (selectedPalIndexB - 1);
+    if (index < 0)
+    {
+        index += 17;
+    }
+
+    selectIndexB(index);
+}
+
+
+function incSelectedIndexA()
+{
+    var index = (selectedPalIndexA + 1) % 17;
+    selectIndexA(index);
+}
+
+function decSelectedIndexA()
+{
+    var index = (selectedPalIndexA - 1);
+    if (index < 0)
+    {
+        index += 17;
+    }
+
+    selectIndexA(index);
+}
 
 function selectIndexA(index)
 {
@@ -324,6 +418,7 @@ var currentbrushIndex = 0;
 function ToggleDitherMode()
 {
     dithermode = !dithermode;
+    dithermode ? btnDitherMode.innerHTML = "On" : btnDitherMode.innerHTML = "Off";
 }
 
 function incBrushIndex()
@@ -333,6 +428,8 @@ function incBrushIndex()
     {
         currentbrushIndex = 4;
     }
+
+    txtToolSize.innerHTML = (currentbrushIndex + 1);
 }
 
 function decBrushIndex()
@@ -342,6 +439,8 @@ function decBrushIndex()
     {
         currentbrushIndex = 0;
     }
+    
+    txtToolSize.innerHTML = (currentbrushIndex + 1);
 }
 
 
@@ -530,7 +629,6 @@ canvas.addEventListener("mousemove", function (e) {
 
     if (IsMouseLeftDown || IsMouseRightDown)
     {
-        console.log("mouise");
         // Draw between lastclientx and clientx
         if (lastClientX > -1 && lastClientY > -1)
         {
@@ -589,28 +687,36 @@ var WasMouseRightDown = false;
 
 canvas.addEventListener("mouseout", function (e) 
 { 
+    /*
     WasMouseLeftDown = IsMouseLeftDown;
     WasMouseRightDown = IsMouseRightDown;
 
     IsMouseLeftDown = false; 
     IsMouseRightDown = false;
-    
+    */
 }, false);
 
 canvas.addEventListener("mouseenter", function (e) 
 { 
-    
-    IsMouseLeftDown = false; 
-    IsMouseRightDown = false;
+    //console.log(e);
+    if (e.buttons == 0)
+    {
+        // Probably want to check the proper button.
+        IsMouseLeftDown = false; 
+        IsMouseRightDown = false;
+    }
 
     lastClientX = e.clientX;
     lastClientY = e.clientY;
+    
 }, false);
 
 canvas.addEventListener("mouseover", function (e) 
 { 
+    /*
     IsMouseLeftDown = WasMouseLeftDown; 
     IsMouseRightDown = WasMouseRightDown;
+    */
 }, false);
 
 

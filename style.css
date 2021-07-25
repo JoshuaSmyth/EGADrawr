@@ -3,6 +3,16 @@ html {
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(60,60,157,1) 35%, rgba(0,212,255,1) 100%);
 }
+
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 p { text-align:center; }
 p.border {border-style: solid;}
 canvas.centre
@@ -85,7 +95,7 @@ div.left
     position: absolute;
     left:0;
     top:50%;
-    height: 140; 
+    height: 180; 
     width: 100; 
     z-index: 99;
     background:#AAAAAA; 
